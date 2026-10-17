@@ -1,0 +1,19 @@
+{
+  "id": "place",
+  "label": "場所導覽",
+  "description": "單一地點內逐項導覽設施與分區、再帶到實際使用體驗的影片；設施特寫與空間廣角中高密度蓋畫面，誠實吐槽與現場反應絕不蓋。",
+  "hook": {
+    "count": 2,
+    "mode": "teaser",
+    "style": "第一句挑最有記憶點的設施亮點或現場標語（越具體越好，帶幽默或反差最佳），第二句挑一段使用體驗的趣事或懸念，預告『不只是介紹設施』；避免場所名稱報幕句與逐條設施清單式開場。"
+  },
+  "broll": {
+    "strategy": "custom",
+    "densityPerMin": 3.8,
+    "minLen": 2.2,
+    "maxLen": 4.5,
+    "allowReuse": false,
+    "maxPerClip": 2,
+    "protectChapters": ["hook"]
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "id": "food",
+  "label": "美食探店",
+  "description": "以店家與菜色為章節單位的探店影片，食物特寫高密度、可重用招牌鏡頭；上菜與第一口反應絕不蓋。",
+  "hook": {
+    "count": 2,
+    "mode": "teaser",
+    "style": "優先最誘人的食物特寫台詞或價格衝擊句（如『整盤只要120塊』『一咬殼就掉』），讓人一秒餓或一秒驚；避免流水帳式的點餐句。"
+  },
+  "broll": {
+    "strategy": "custom",
+    "densityPerMin": 4.5,
+    "minLen": 1.8,
+    "maxLen": 3.0,
+    "allowReuse": true,
+    "maxPerClip": 2,
+    "protectChapters": ["hook"]
+  }
+}

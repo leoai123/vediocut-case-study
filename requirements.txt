@@ -1,0 +1,18 @@
+# 剪輯流程實際依賴。先前只列 fastapi/uvicorn/python-multipart，
+# 但 numpy（切點精修）、torch + transformers（Chinese-CLIP 視覺索引）
+# 是手動裝進 venv 的 —— 換機器重建時才發現環境無法從此檔重現。
+# 缺 numpy 會讓切點精修「靜默降級」（p4 事故），缺 torch 則視覺索引直接無法建。
+
+# Web / 編輯器服務
+fastapi
+uvicorn[standard]
+python-multipart
+
+# 切點精修（能量谷分析）
+numpy==2.4.6
+librosa
+
+# 視覺索引 Chinese-CLIP v2
+torch==2.13.0
+transformers==5.14.1
+pillow

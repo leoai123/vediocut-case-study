@@ -1,0 +1,19 @@
+{
+  "id": "unboxing",
+  "label": "開箱評測",
+  "description": "外觀→重點規格→實測→結論的評測影片，產品特寫蓋畫面、結論先行、選段偏重實測證據。",
+  "hook": {
+    "count": 2,
+    "mode": "teaser",
+    "style": "第一句先爆結論（值不值得買／推不推），第二句補最關鍵的實測畫面或數據；避免空泛的外觀讚美。"
+  },
+  "broll": {
+    "strategy": "custom",
+    "densityPerMin": 3.5,
+    "minLen": 2.0,
+    "maxLen": 3.5,
+    "allowReuse": false,
+    "maxPerClip": 1,
+    "protectChapters": ["hook"]
+  }
+}

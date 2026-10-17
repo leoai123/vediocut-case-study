@@ -1,0 +1,19 @@
+{
+  "id": "realestate",
+  "label": "房仲帶看",
+  "description": "外觀→玄關→客廳→臥室→亮點→總結的空間動線帶看，空景長窗蓋畫面、保留坪數價格屋況等關鍵數據。",
+  "hook": {
+    "count": 1,
+    "mode": "teaser",
+    "style": "第一句直接丟總價或最大亮點（如『這間三房只要 XXX 萬』『一開門就是整片景』）；避免從地段沿革慢慢鋪陳。"
+  },
+  "broll": {
+    "strategy": "custom",
+    "densityPerMin": 3.5,
+    "minLen": 2.5,
+    "maxLen": 5.0,
+    "allowReuse": false,
+    "maxPerClip": 2,
+    "protectChapters": ["hook"]
+  }
+}

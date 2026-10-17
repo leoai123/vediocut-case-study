@@ -1,0 +1,19 @@
+{
+  "id": "daily",
+  "label": "生活日常",
+  "description": "日記式鬆散章節、情緒優先的生活紀錄，中密度蓋畫面，刻意保留呼吸感與停頓。",
+  "hook": {
+    "count": 2,
+    "mode": "teaser",
+    "style": "挑一個有趣或情緒濃度高的瞬間（笑點、突發、真心話），語氣自然像跟朋友分享；避免正經的資訊句或結論句當開頭。"
+  },
+  "broll": {
+    "strategy": "custom",
+    "densityPerMin": 2.5,
+    "minLen": 2.0,
+    "maxLen": 3.5,
+    "allowReuse": false,
+    "maxPerClip": 1,
+    "protectChapters": ["hook"]
+  }
+}

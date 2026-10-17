@@ -1,0 +1,19 @@
+{
+  "id": "talking",
+  "label": "心得分享",
+  "description": "觀點獨白的口播影片，臉與語氣是主角，B-roll 極低、保留語氣轉折與刻意停頓。",
+  "hook": {
+    "count": 1,
+    "mode": "teaser",
+    "style": "挑一句最有記憶點的金句或最具爭議的觀點，留原始語氣；避免把結論攤平講完，要留懸念。"
+  },
+  "broll": {
+    "strategy": "custom",
+    "densityPerMin": 1.0,
+    "minLen": 2.5,
+    "maxLen": 3.5,
+    "allowReuse": false,
+    "maxPerClip": 1,
+    "protectChapters": ["hook"]
+  }
+}

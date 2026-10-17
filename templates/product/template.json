@@ -1,0 +1,19 @@
+{
+  "id": "product",
+  "label": "商品介紹",
+  "description": "痛點→方案→賣點逐項→行動呼籲的商品短片，radio-edit 最嚴格、賣點畫面精準蓋、單句最強鉤子。",
+  "hook": {
+    "count": 1,
+    "mode": "teaser",
+    "style": "只挑一段：最戳痛點的一句或最強賣點承諾，直球、可量化；避免鋪陳與客套。"
+  },
+  "broll": {
+    "strategy": "custom",
+    "densityPerMin": 3.0,
+    "minLen": 2.0,
+    "maxLen": 3.0,
+    "allowReuse": false,
+    "maxPerClip": 1,
+    "protectChapters": ["hook"]
+  }
+}

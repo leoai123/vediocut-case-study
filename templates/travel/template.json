@@ -1,0 +1,19 @@
+{
+  "id": "travel",
+  "label": "旅遊遊記",
+  "description": "依地點與時間軸推進的旅行 vlog，風景與移動鏡頭密集蓋畫面、保留抵達第一眼反應。",
+  "hook": {
+    "count": 2,
+    "mode": "teaser",
+    "style": "挑一個最震撼的風景或移動畫面配一句帶懸念的旁白（如『沒想到走到這裡竟然…』），把觀眾拉進『這趟到底看到什麼』的期待；避免行程流水帳式的句子。"
+  },
+  "broll": {
+    "strategy": "custom",
+    "densityPerMin": 4.5,
+    "minLen": 2.5,
+    "maxLen": 4.0,
+    "allowReuse": false,
+    "maxPerClip": 2,
+    "protectChapters": ["hook"]
+  }
+}

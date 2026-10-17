@@ -1,0 +1,19 @@
+{
+  "id": "explainer",
+  "label": "知識解說",
+  "description": "問題→解釋→例證→總結的知識型影片，B-roll 服務概念理解；章節是邏輯分組但段落仍嚴守時間順序。",
+  "hook": {
+    "count": 1,
+    "mode": "teaser",
+    "style": "挑一個讓人好奇的問題句或反直覺結論當鉤子（如『你以為…其實…』）；避免先講定義或背景。"
+  },
+  "broll": {
+    "strategy": "custom",
+    "densityPerMin": 3.5,
+    "minLen": 2.0,
+    "maxLen": 3.5,
+    "allowReuse": false,
+    "maxPerClip": 1,
+    "protectChapters": ["hook"]
+  }
+}

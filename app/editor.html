@@ -1,0 +1,184 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-i18n="page_title">vediocut 剪輯介面</title>
+<style>
+  :root{
+    --bg:#0f1216; --panel:#171b21; --panel2:#1e242c; --line:#2a323c;
+    --fg:#e7ecf2; --muted:#93a1b0; --accent:#4f8cff; --accent2:#2b6fe0;
+    --ok:#37c07a; --warn:#e0a83b; --danger:#e05a5a; --lock:#c98a2b;
+    --radius:10px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);
+    font:14px/1.5 -apple-system,"PingFang TC","Microsoft JhengHei",system-ui,sans-serif}
+  header{position:sticky;top:0;z-index:20;background:rgba(15,18,22,.94);
+    backdrop-filter:blur(6px);border-bottom:1px solid var(--line);padding:12px 20px}
+  h1{font-size:17px;margin:0;display:flex;align-items:center;gap:10px}
+  h1 small{font-weight:400;color:var(--muted);font-size:12px}
+  .wrap{max-width:1080px;margin:0 auto;padding:20px}
+  .bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+  button{font:inherit;color:var(--fg);background:var(--panel2);border:1px solid var(--line);
+    border-radius:8px;padding:7px 13px;cursor:pointer}
+  button:hover{border-color:var(--accent)}
+  button:disabled{opacity:.45;cursor:not-allowed}
+  button.primary{background:var(--accent2);border-color:var(--accent2)}
+  button.primary:hover{background:var(--accent)}
+  button.ghost{background:transparent}
+  button.icon{padding:4px 9px;font-size:13px}
+  button.danger{color:var(--danger)}
+  section{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    padding:16px;margin:16px 0}
+  section>h2{margin:0 0 12px;font-size:14px;letter-spacing:.02em;display:flex;
+    align-items:center;gap:8px}
+  .count{color:var(--muted);font-weight:400;font-size:12px}
+  label.f{display:flex;flex-direction:column;gap:3px;font-size:11px;color:var(--muted)}
+  input[type=number],input[type=text],select{font:inherit;color:var(--fg);
+    background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:5px 7px}
+  input:focus,select:focus{outline:none;border-color:var(--accent)}
+  input:disabled,select:disabled{opacity:.5}
+  .chk{display:inline-flex;align-items:center;gap:6px;color:var(--fg);font-size:13px;cursor:pointer}
+  .card{background:var(--panel2);border:1px solid var(--line);border-radius:9px;
+    padding:11px 12px;margin-bottom:9px}
+  .card.locked{border-color:var(--lock);background:#241f16}
+  .card .row1{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .badge{font-size:11px;padding:2px 8px;border-radius:20px;background:#26303c;color:#b9c6d4}
+  .badge.chap{background:#173a2c;color:#7fe0b0}
+  .idtag{font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--muted)}
+  .asset{font-family:ui-monospace,Menlo,monospace;font-size:12px;color:#cbd6e2}
+  .txt{flex:1;min-width:120px;color:var(--fg)}
+  .spacer{flex:1}
+  .fields{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;margin-top:9px}
+  .fields input[type=number]{width:92px}
+  .dur{font-size:12px;color:var(--muted)}
+  .dur b{color:var(--fg);font-variant-numeric:tabular-nums}
+  .broll-grid input,.broll-grid select{width:100%}
+  .lockbadge{color:var(--lock);font-size:11px}
+  .warnrow{color:var(--warn);font-size:12px;margin-top:6px}
+  #status{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:8px}
+  .dot{width:9px;height:9px;border-radius:50%;background:var(--muted);flex:none}
+  .dot.running{background:var(--warn);animation:pulse 1s infinite}
+  .dot.done{background:var(--ok)} .dot.failed{background:var(--danger)}
+  @keyframes pulse{50%{opacity:.3}}
+  pre.log{max-height:150px;overflow:auto;background:#0a0d10;border:1px solid var(--line);
+    border-radius:8px;padding:9px;font:11px/1.45 ui-monospace,Menlo,monospace;
+    color:#b9c6d4;white-space:pre-wrap;margin:10px 0 0;display:none}
+  video{width:100%;border-radius:9px;background:#000;margin-top:10px;display:none}
+  #toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
+    background:#222c38;border:1px solid var(--line);border-radius:8px;padding:10px 16px;
+    opacity:0;transition:opacity .25s;pointer-events:none;z-index:50;max-width:80vw}
+  #toast.show{opacity:1}
+  #toast.err{border-color:var(--danger)}
+  .hint{color:var(--muted);font-size:12px;margin:2px 0 0}
+  .metaline{display:flex;gap:20px;flex-wrap:wrap;align-items:flex-end}
+  .loadtag{font-size:12px;color:var(--muted)}
+  .loadtag.busy{color:var(--warn);font-weight:600}
+  .loadwarn{color:var(--warn);font-size:12px;margin-top:6px;display:none}
+  .loadwarn.show{display:block}
+  pre.validate{max-height:220px;overflow:auto;background:#0a0d10;border:1px solid var(--line);
+    border-radius:8px;padding:9px;font:11px/1.45 ui-monospace,Menlo,monospace;
+    color:#b9c6d4;white-space:pre-wrap;margin:10px 0 0;display:none}
+  pre.validate.ok{border-color:var(--ok)}
+  pre.validate.err{border-color:var(--danger)}
+  .fail-callout{display:none;border:1px solid var(--danger);background:#2a1414;color:#ff9d9d;
+    border-radius:8px;padding:9px 12px;font-size:12px;margin-top:8px;white-space:pre-wrap}
+  .fail-callout.show{display:block}
+  table.cues{width:100%;border-collapse:collapse;margin-top:8px;font-size:12px}
+  table.cues th,table.cues td{border-bottom:1px solid var(--line);padding:5px 8px;text-align:left}
+  table.cues th{color:var(--muted);font-weight:500}
+  .segrow{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;margin-top:8px}
+</style>
+
+<header>
+  <h1><span data-i18n="app_title">vediocut 剪輯介面</span> <small data-i18n="app_subtitle">逐字稿優先順剪 · 微調後重新渲染</small> <button class="ghost icon" id="langToggle" type="button">EN</button></h1>
+  <div class="bar">
+    <label class="f" style="min-width:90px"><span data-i18n="project_label">專案</span>
+      <select id="projectSel"></select>
+    </label>
+    <span id="projectInfo" class="hint"></span>
+  </div>
+  <div class="bar">
+    <button class="ghost icon" id="reload" data-i18n="reload_btn">↻ 重新載入</button>
+    <button class="primary" id="save" data-i18n="save_btn">儲存 EDL</button>
+    <span class="spacer"></span>
+    <span id="dirty" class="hint"></span>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section id="renderSec">
+    <h2 data-i18n="render_h2">渲染</h2>
+    <div class="bar">
+      <label class="chk"><input type="checkbox" id="opt_radio"> <span data-i18n="opt_radio">只出 A-roll radio（--radio，最快）</span></label>
+      <label class="chk"><input type="checkbox" id="opt_nobroll"> <span data-i18n="opt_nobroll">不套 B-roll（--no-broll）</span></label>
+      <label class="chk"><input type="checkbox" id="opt_clear" checked> <span data-i18n="opt_clear">清除切片快取（A-roll 微調/排序後必勾）</span></label>
+    </div>
+    <div class="bar">
+      <button class="primary" id="render" data-i18n="render_btn">▶ 重新渲染</button>
+      <button id="preview" data-i18n="preview_btn">預覽成片</button>
+      <button class="ghost" id="checkEdl" data-i18n="check_edl_btn">✓ 檢查 EDL</button>
+      <span class="spacer"></span>
+      <div id="status"><span class="dot" id="dot"></span><span id="statusText" data-i18n="status_initial">尚未查詢</span></div>
+      <span id="loadTag" class="loadtag"></span>
+    </div>
+    <p class="hint" data-i18n="render_hint">radio 只重編 A-roll、最快，適合先確認順序與切點；完整渲染會套 B-roll、音樂、字幕，較久。</p>
+    <p id="loadWarn" class="loadwarn" data-i18n="load_warn">⚠ 系統忙碌，渲染可能失敗或很慢</p>
+    <div id="failCallout" class="fail-callout"></div>
+    <pre class="log" id="log"></pre>
+    <pre class="validate" id="validateOut"></pre>
+    <video id="video" controls preload="metadata"></video>
+  </section>
+
+  <section id="verticalSec">
+    <h2 data-i18n="vertical_h2">9:16 直式輸出</h2>
+    <div class="bar">
+      <label class="f"><span data-i18n="vmode_label">取景模式</span>
+        <select id="vMode">
+          <option value="crop" data-i18n="vmode_crop">crop（裁切填滿）</option>
+          <option value="blur" data-i18n="vmode_blur">blur（模糊背景襯底）</option>
+        </select>
+      </label>
+    </div>
+    <div class="bar">
+      <button class="primary" id="renderVertical" data-i18n="render_vertical_btn">▶ 輸出 9:16 直式</button>
+      <button id="previewVertical" data-i18n="preview_vertical_btn">預覽直式成片</button>
+    </div>
+    <p class="hint" id="verticalHint" data-i18n="vertical_hint_generic">輸入來源：output/&lt;project&gt;/final.mp4（須先完成 16:9 渲染）。輸出：output/&lt;project&gt;/vertical.mp4。</p>
+    <video id="videoVertical" controls preload="metadata" style="max-width:360px"></video>
+  </section>
+
+  <section id="metaSec">
+    <h2 data-i18n="meta_h2">片頭與音樂</h2>
+    <div class="metaline">
+      <label class="f"><span data-i18n="hookcount_label">精華片頭段數 hookCount（0＝關閉）</span>
+        <input type="number" id="hookCount" min="0" step="1" style="width:90px">
+      </label>
+      <label class="f"><span data-i18n="music_label">音樂主檔（唯讀）</span>
+        <input type="text" id="music" readonly style="width:280px">
+      </label>
+      <label class="f"><span data-i18n="targetdur_label">目標時長（秒，選填）</span>
+        <input type="number" id="targetDur" min="10" step="5" style="width:120px" placeholder="留空＝不限" data-i18n-placeholder="targetdur_placeholder">
+      </label>
+      <div class="f"><span data-i18n="meta_status_label">狀態 / 方法</span><div id="metaInfo" class="asset"></div></div>
+    </div>
+    <p class="hint" data-i18n="meta_hint">目標時長留空＝不限制成片長度、以故事完整性為主；填數字則為軟性目標（檢查 EDL 時 ±15% 提醒，不強制裁切）。</p>
+    <div id="cuesWrap"></div>
+  </section>
+
+  <section id="arollSec">
+    <h2><span data-i18n="aroll_h2">A-roll 主線</span> <span class="count" id="arollCount"></span></h2>
+    <div id="aroll"></div>
+  </section>
+
+  <section id="brollSec">
+    <h2><span data-i18n="broll_h2">B-roll 覆蓋</span> <span class="count" id="brollCount"></span></h2>
+    <div id="broll"></div>
+  </section>
+
+</div>
+
+<div id="toast"></div>
+
+<script src="/editor.js"></script>
+</body>
+</html>
