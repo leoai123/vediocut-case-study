@@ -26,11 +26,11 @@ if command -v ffmpeg >/dev/null 2>&1 && command -v ffprobe >/dev/null 2>&1; then
   encoders="$(ffmpeg -hide_banner -encoders 2>/dev/null)"
   grep -qE '^[[:space:]]*[^[:space:]]+[[:space:]]+subtitles[[:space:]]' <<<"$filters" \
     && ok "ffmpeg 支援 subtitles 濾鏡（燒字幕用，需 libass）" \
-    || bad "ffmpeg 缺 subtitles 濾鏡：字幕燒不上去（需編入 libass）。Homebrew 的一般 ffmpeg 9.x 沒有 libass；macOS：brew install ffmpeg-full，再把 $(brew --prefix ffmpeg-full)/bin 加到 PATH 最前面——它是 keg-only，不會自動進 PATH"
+    || bad "ffmpeg 缺 subtitles 濾鏡：字幕燒不上去（需編入 libass）。Homebrew 的一般 ffmpeg 9.x 沒有 libass；macOS：brew install ffmpeg-full，再把 \$(brew --prefix ffmpeg-full)/bin 加到 PATH 最前面——它是 keg-only，不會自動進 PATH"
   grep -q libx264 <<<"$encoders" \
     && ok "ffmpeg 支援 libx264" || bad "ffmpeg 缺 libx264 編碼器"
 else
-  bad "缺 ffmpeg / ffprobe（macOS：brew install ffmpeg-full，再把 $(brew --prefix ffmpeg-full)/bin 加到 PATH 最前面——它是 keg-only，不會自動進 PATH）"
+  bad "缺 ffmpeg / ffprobe（macOS：brew install ffmpeg-full，再把 \$(brew --prefix ffmpeg-full)/bin 加到 PATH 最前面——它是 keg-only，不會自動進 PATH）"
 fi
 
 if command -v whisper-cli >/dev/null 2>&1; then
